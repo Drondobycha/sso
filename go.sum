@@ -2,6 +2,8 @@ github.com/BurntSushi/toml v1.2.1 h1:9F2/+DoOYIOksmaJFPw1tGFy1eDnIJXg+UHjuD8lTak
 github.com/BurntSushi/toml v1.2.1/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/Drondobycha/proto v0.0.3 h1:SW4BrafaNzHPTPkQLmwDOXEU5Hb2XaIOv8MXmz8PBVY=
 github.com/Drondobycha/proto v0.0.3/go.mod h1:pXzr/Zfbn75O6Uvh80nflr6w4mIYmcrXRcmGY5+7BJQ=
+github.com/Drondobycha/proto v0.0.4 h1:i2ds0j7RYMLqiKUIUAF5wSRY4d74B7F6VQlu0QRD/fo=
+github.com/Drondobycha/proto v0.0.4/go.mod h1:pXzr/Zfbn75O6Uvh80nflr6w4mIYmcrXRcmGY5+7BJQ=
 github.com/brianvoe/gofakeit/v6 v6.28.0 h1:Xib46XXuQfmlLS2EXRuJpqcw8St6qSZz75OUo0tgAW4=
 github.com/brianvoe/gofakeit/v6 v6.28.0/go.mod h1:Xj58BMSnFqcn/fAQeSK+/PLtC5kSb7FJIq4JyGa8vEs=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=

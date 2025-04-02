@@ -3,7 +3,7 @@ module sso
 go 1.24.1
 
 require (
-	github.com/Drondobycha/proto v0.0.3
+	github.com/Drondobycha/proto v0.0.4
 	github.com/golang-jwt/jwt/v5 v5.2.2
 	github.com/golang-migrate/migrate/v4 v4.18.2
 	github.com/ilyakaznacheev/cleanenv v1.5.0

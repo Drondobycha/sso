@@ -106,3 +106,20 @@ func (s *Storage) App(ctx context.Context, appId int) (models.App, error) {
 	}
 	return app, nil
 }
+
+func (s *Storage) AddPerm(ctx context.Context, usrID int64, permissions string) (bool, error) {
+	// const op = "storage.sqlite.AddPerm"
+	return true, nil
+}
+
+func (s *Storage) CheckPerm(ctx context.Context, uid int64, CheckedPerm string) (res bool, err error) {
+	return true, nil
+}
+
+func (s *Storage) ListPerm(ctx context.Context, uid int64) (list_permission []string, err error) {
+	return []string{"reed"}, nil
+}
+
+func (s *Storage) RemovePerm(ctx context.Context, uid int64, RemovedPerm string) (res bool, err error) {
+	return true, nil
+}
