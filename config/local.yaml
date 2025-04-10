@@ -1,5 +1,5 @@
 env: "local" #dev, prod
-storage_path: "./storage/sso.db"
+connStr: "postgres://postgres:12345678@localhost:5432/SSO"
 token_ttl: 1h
 grpc:
   port: 44044

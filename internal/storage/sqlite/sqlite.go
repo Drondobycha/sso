@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"sso/internal/domain/models"
+	perm "sso/internal/services/permissions"
 	"sso/internal/storage"
 
 	"github.com/mattn/go-sqlite3"
@@ -108,7 +109,19 @@ func (s *Storage) App(ctx context.Context, appId int) (models.App, error) {
 }
 
 func (s *Storage) AddPerm(ctx context.Context, usrID int64, permissions string) (bool, error) {
-	// const op = "storage.sqlite.AddPerm"
+	const op = "storage.sqlite.AddPerm"
+	stmt, err := s.db.Prepare("INSERT INTO permissions(user_id, permission) VALUES(?, ?);")
+	if err != nil {
+		return false, fmt.Errorf("%s: %w", op, err)
+	}
+	_, err = stmt.ExecContext(ctx, usrID, permissions)
+	if err != nil {
+		var sqliteErr sqlite3.Error
+		if errors.As(err, &sqliteErr) && sqliteErr.ExtendedCode == sqlite3.ErrConstraintUnique {
+			return false, fmt.Errorf("%s: %w", op, perm.ErrPermissionExists)
+		}
+		return false, fmt.Errorf("%s: %w", op, err)
+	}
 	return true, nil
 }
 
@@ -117,7 +130,32 @@ func (s *Storage) CheckPerm(ctx context.Context, uid int64, CheckedPerm string) 
 }
 
 func (s *Storage) ListPerm(ctx context.Context, uid int64) (list_permission []string, err error) {
-	return []string{"reed"}, nil
+	const op = "storage.sqlite.ListPerm"
+	stmt, err := s.db.Prepare("SELECT permission FROM permissions WHERE user_id = ?;")
+	if err != nil {
+		return nil, fmt.Errorf("%s: %w", op, err)
+	}
+	rows, err := stmt.QueryContext(ctx, uid)
+	if err != nil {
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, fmt.Errorf("%s: %w", op, storage.ErrUserNotFound)
+		}
+		return nil, fmt.Errorf("%s: %w", op, err)
+	}
+	defer rows.Close()
+	var permissions []string
+	for rows.Next() {
+		var permission string
+		err = rows.Scan(&permission)
+		if err != nil {
+			if errors.Is(err, sql.ErrNoRows) {
+				return nil, fmt.Errorf("%s: %w", op, perm.ErrPermissionNotFound)
+			}
+			return nil, fmt.Errorf("%s: %w", op, err)
+		}
+		permissions = append(permissions, permission)
+	}
+	return permissions, nil
 }
 
 func (s *Storage) RemovePerm(ctx context.Context, uid int64, RemovedPerm string) (res bool, err error) {

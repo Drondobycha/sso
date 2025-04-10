@@ -19,7 +19,7 @@ func main() {
 	cfg := config.MustLoad()
 	log := setupLogger(cfg.Env)
 	log.Info("starting aplication", slog.Any("config", cfg))
-	application := app.New(log, cfg.GRPC.Port, cfg.StoragePath, cfg.TokenTTL)
+	application := app.New(log, cfg.GRPC.Port, cfg.ConnStr, cfg.TokenTTL)
 	go application.GRPCSrv.MustRun()
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, syscall.SIGTERM, syscall.SIGINT)

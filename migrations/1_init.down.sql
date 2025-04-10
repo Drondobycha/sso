@@ -1,2 +1,4 @@
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS apps;
+DROP TABLE If EXISTS permissions;
+DROP TABLE IF EXISTS schema_migrations;

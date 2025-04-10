@@ -8,7 +8,7 @@ import (
 	// Библиотека для миграций
 	"github.com/golang-migrate/migrate/v4"
 	// Драйвер для выполнения миграций SQLite 3
-	_ "github.com/golang-migrate/migrate/v4/database/sqlite3"
+	_ "github.com/golang-migrate/migrate/v4/database/postgres"
 	// Драйвер для получения миграций из файлов
 	_ "github.com/golang-migrate/migrate/v4/source/file"
 )
@@ -30,12 +30,15 @@ func main() {
 
 	m, err := migrate.New(
 		"file://"+migrationsPath,
-		fmt.Sprintf("sqlite3://%s?x-migrations-table=%s", storagePath, migrationsTable),
+		"postgres://postgres:12345678@localhost:5432/SSO",
 	)
 	if err != nil {
 		panic(err)
 	}
-
+	// err = m.Force(0)
+	// if err != nil {
+	// 	panic(err)
+	// }
 	if err := m.Up(); err != nil {
 		if errors.Is(err, migrate.ErrNoChange) {
 			fmt.Println("no migrations to apply")
@@ -45,6 +48,16 @@ func main() {
 
 		panic(err)
 	}
+
+	// if err := m.Down(); err != nil {
+	// 	if errors.Is(err, migrate.ErrNoChange) {
+	// 		fmt.Println("no migrations to apply")
+
+	// 		return
+	// 	}
+
+	// 	panic(err)
+	// }
 
 	fmt.Println("migrations applied")
 }

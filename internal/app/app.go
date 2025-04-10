@@ -1,11 +1,12 @@
 package app
 
 import (
+	"context"
 	"log/slog"
 	grpcapp "sso/internal/app/grpc"
 	"sso/internal/services/auth"
 	"sso/internal/services/permissions"
-	"sso/internal/storage/sqlite"
+	"sso/internal/storage/postgres"
 	"time"
 )
 
@@ -14,7 +15,7 @@ type App struct {
 }
 
 func New(log *slog.Logger, grpcPort int, storagePath string, tokenTTL time.Duration) *App {
-	storage, err := sqlite.New(storagePath)
+	storage, err := postgres.New(context.Background(), storagePath)
 	if err != nil {
 		panic(err)
 	}

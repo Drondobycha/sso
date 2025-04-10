@@ -99,5 +99,22 @@ func (p *Permissions) CheckPerm(ctx context.Context, uid int64, CheckedPerm stri
 }
 
 func (p *Permissions) ListPerm(ctx context.Context, uid int64) (list_permission []string, err error) {
-	return []string{"reed"}, nil
+	const op = "permissions.ListPerm"
+	log := p.log.With(slog.String("op", op), slog.Int64("user_id", uid))
+	log.Info("attempting to list permissions")
+	list_permission, err = p.permProvider.ListPerm(ctx, uid)
+	if err != nil {
+		if errors.Is(err, ErrUserNotFound) {
+			log.Warn("user not found", sl.Err(err))
+			return nil, fmt.Errorf("%s: %w", op, ErrUserNotFound)
+		}
+		if errors.Is(err, ErrPermissionNotFound) {
+			log.Warn("permission not found", sl.Err(err))
+			return nil, fmt.Errorf("%s: %w", op, ErrPermissionNotFound)
+		}
+		log.Error("failed to list permissions", sl.Err(err))
+		return nil, err
+	}
+	log.Info("permissions listed successfully")
+	return list_permission, nil
 }
