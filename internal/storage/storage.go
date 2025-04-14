@@ -8,6 +8,7 @@ var (
 	ErrAppNotFound        = errors.New("app not found")
 	ErrPermissionExists   = errors.New("permission already exists")
 	ErrPermissionNotFound = errors.New("permission not found")
+	ErrUserHasPermissions = errors.New("user has permissions and cannot be deleted")
 )
 
 var AllPermissions = []string{

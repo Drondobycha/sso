@@ -17,6 +17,7 @@ require (
 	github.com/cockroachdb/apd v1.1.0 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/gofrs/uuid v4.4.0+incompatible // indirect
+	github.com/golang/protobuf v1.5.4 // indirect
 	github.com/hashicorp/errwrap v1.1.0 // indirect
 	github.com/hashicorp/go-multierror v1.1.1 // indirect
 	github.com/jackc/fake v0.0.0-20150926172116-812a484cc733 // indirect
@@ -35,6 +36,7 @@ require (
 	github.com/brianvoe/gofakeit/v6 v6.28.0
 	github.com/jackc/pgx v3.6.2+incompatible
 	github.com/joho/godotenv v1.5.1 // indirect
+	github.com/pganalyze/pg_query_go/v4 v4.2.3
 	golang.org/x/crypto v0.36.0
 	golang.org/x/net v0.34.0 // indirect
 	golang.org/x/sys v0.31.0 // indirect
